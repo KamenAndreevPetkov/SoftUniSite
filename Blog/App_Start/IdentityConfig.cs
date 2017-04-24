@@ -27,7 +27,14 @@ namespace Blog
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your SMS service here to send a text message.
+            var soapSms = new Blog.ASPSMSX2.ASPSMSX2SoapClient("ASPSMSX2Soap");
+            soapSms.SendSimpleTextSMS(
+              System.Configuration.ConfigurationManager.AppSettings["SMSAccountIdentification"],
+              System.Configuration.ConfigurationManager.AppSettings["SMSAccountPassword"],
+              message.Destination,
+              System.Configuration.ConfigurationManager.AppSettings["SMSAccountFrom"],
+              message.Body);
+            soapSms.Close();
             return Task.FromResult(0);
         }
     }
@@ -40,7 +47,7 @@ namespace Blog
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<BlogDbContext>()));
             // Configure validation logic for usernames
@@ -81,12 +88,13 @@ namespace Blog
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
     }
+
 
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
