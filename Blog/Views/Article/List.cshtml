@@ -1,7 +1,7 @@
 ﻿@model List<Blog.Models.Article>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "All Articles";
 }
 
 <div class="container">
@@ -9,23 +9,38 @@
         <div class="col-sm-12">
             @foreach (var article in Model)
             {
-                <article>
-                    <header>
-                        <h2>
-                            @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
-                        </h2>
-                    </header>
-                    <p>
-                        @article.Content
-                    </p>
+                <div class="col-md-4">
+                    <h2>@article.Title</h2>
+                    <h3>@article.Content</h3>
+                    <img src="@article.ImagePath" class="img-responsive" />
+                    <br>
                     <footer class="pull-right">
                         <small class="author">
-                            @article.Author.FullName
+                            - @article.Author.FullName
                         </small>
                     </footer>
-                </article>
-            }
-        </div>
+                    <p><a class="btn btn-default" href="/Article/Details/@article.Id">Read more</a></p>
+                </div>
+                    @*                <article>
+                            <header>
+                                <h2>
+                                    @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
+                                </h2>
+                            </header>
+                            <p>
+                                @article.Content
+                                <br>
+                                <img src="@article.ImagePath" alt="Image" width="150" />
+                            </p>
+
+                            <footer class="pull-right">
+                                <small class="author">
+                                    @article.Author.FullName
+                                </small>
+                            </footer>
+                        </article>*@
+                    }
+                </div>
     </div>
 </div>
 <hr />

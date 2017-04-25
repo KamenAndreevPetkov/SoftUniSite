@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using System.Data.Entity;
     using System.Linq;
+    using System.Web;
 
     public class ArticleController : Controller
     {
@@ -27,7 +28,7 @@
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Article model)
+        public ActionResult Create(Article model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -36,6 +37,24 @@
                     var authorId = User.Identity.GetUserId();
 
                     model.AuthorId = authorId;
+
+                    if (image != null)
+                    {
+                        var allowedContentTypes = new[] { "image/jpeg", "image/jpg", "image/png" };
+
+                        if (allowedContentTypes.Contains(image.ContentType))
+                        {
+                            var imagesPath = "/Content/Images/";
+
+                            var filename = image.FileName;
+
+                            var uploadPath = imagesPath + filename;
+
+                            image.SaveAs(Server.MapPath(uploadPath));
+
+                            model.ImagePath = uploadPath;
+                        }
+                    }
 
                     db.Articles.Add(model);
                     db.SaveChanges();
@@ -47,19 +66,39 @@
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
-            using (var db= new BlogDbContext())
+            var db = new BlogDbContext();
+
+            var article = db.Articles
+                .Where(a => a.Id == id)
+                .Select(a => new ArticleDetailsModel
             {
-                var article = db.Articles.Include(a => a.Author).Where(a => a.Id == id).FirstOrDefault();
+                Title = a.Title,
+                Content = a.Content,
+                ImagePath = a.ImagePath,
+                Author = a.Author,
+            }).FirstOrDefault();
 
-                if (article == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(article);
+            if (article == null)
+            {
+                return HttpNotFound();
             }
+
+            return View(article);
+            
+            //using (var db = new BlogDbContext())
+            //{
+            //    var article = db.Articles.Include(a => a.Author).Where(a => a.Id == id).FirstOrDefault();
+
+            //    if (article == null)
+            //    {
+            //        return HttpNotFound();
+            //    }
+
+            //    return View(article);
+            //}
         }
 
         [Authorize]

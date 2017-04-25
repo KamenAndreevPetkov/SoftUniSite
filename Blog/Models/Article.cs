@@ -1,8 +1,10 @@
 ﻿namespace Blog.Models
 {
     using System.ComponentModel.DataAnnotations;
+
     public class Article
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]
@@ -11,6 +13,8 @@
         
         [Required]
         public string Content { get; set; }
+
+        public string ImagePath { get; set; }
 
         public string AuthorId { get; set; }
 

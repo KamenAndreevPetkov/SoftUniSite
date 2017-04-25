@@ -1,30 +1,59 @@
-﻿@model Blog.Models.Article
-@using Microsoft.AspNet.Identity;
+﻿@*@using Microsoft.AspNet.Identity;
     @{
         ViewBag.Title = "Details";
     }
 
     <div class="container">
-        <article>
-            <header>
-                <h2>
-                    @Model.Title
-                </h2>
-            </header>
-            <p>
-                @Model.Content
-            </p>
-            <small class="author">
-                @Model.Author.FullName
-            </small>
-            <footer class="pull-right">
-                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.GetUserId())))
-                {
+        <div class="row mt-40">
+            <div class="col-md-4">
+                <h2>@Model.Title</h2>
+            </div>
+
+            <div class="col-md-4">
+                <p>@Model.Content</p>
+            </div>
+
+            <div class="col-md-4">
+                <img src="@Model.ImagePath" class="img-responsive" />
+            </div>
+
+            <div>
+
+            </div>
+        </div>
+    </div>*@
+
+@model Blog.Models.ArticleDetailsModel
+@using Microsoft.AspNet.Identity;
+@using System.Security.Claims;
+@{
+            ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <p>
+            @Model.Content
+        </p>
+            <img src="@Model.ImagePath" class="img-responsive" />
+        <br>
+
+        <small class="author">
+            @Model.Author.FullName
+        </small>
+        <footer class="pull-right">
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || HttpContext.Current.User.Identity.Name.Equals(Model.Author.UserName)))
+            {
                 @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
                 @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-                }
-                @Html.ActionLink("Back", "List", "Article", null, new { @class = "btn btn-default btn-xs" })
-            </footer>
-        </article>
-    </div>
-    <hr />
+            }
+            @Html.ActionLink("Back", "List", "Article", null, new { @class = "btn btn-default btn-xs" })
+        </footer>
+    </article>
+</div>
+<hr />
