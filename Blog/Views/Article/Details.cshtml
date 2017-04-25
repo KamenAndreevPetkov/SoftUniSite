@@ -15,7 +15,7 @@
                 @Model.Content
             </p>
             <small class="author">
-                --author @Model.Author.FullName
+                @Model.Author.FullName
             </small>
             <footer class="pull-right">
                 @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.GetUserId())))
