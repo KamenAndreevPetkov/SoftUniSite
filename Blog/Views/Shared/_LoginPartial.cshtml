@@ -5,6 +5,12 @@
     {
         @Html.AntiForgeryToken()
 
+        @*using (Html.BeginForm("List", "Article", FormMethod.Get))
+        {
+            <div class="nav navbar-nav navbar-brand">
+                <input type="text" class="form-control" name="search" />
+            </div>
+        }*@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 @Html.ActionLink("Welcome, " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })

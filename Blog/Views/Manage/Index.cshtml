@@ -49,9 +49,9 @@
                     @(Model.PhoneNumber ?? "None")
                     @if (Model.PhoneNumber != null)
                     {
-                        @Html.ActionLink("Change", "AddPhoneNumber", null, new { @class = "btn btn-danger btn-sm" })
-                        @:  |
-                        @Html.ActionLink("Remove", "RemovePhoneNumber", null, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Change", "AddPhoneNumber", null, new { @class = "btn btn-success btn-sm" })
+                        @:
+                        @Html.ActionLink("Remove", "RemovePhoneNumber", null, new { @class = "btn btn-danger btn-sm" })
                     }
                     else
                     {
