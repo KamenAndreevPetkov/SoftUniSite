@@ -11,8 +11,8 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-group"> 
-                 @Html.LabelFor(m => m.Title, new { @class = "control-label col-sm-4" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
                     @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly" })
                 </div>
@@ -25,9 +25,19 @@
                 </div>
             </div>
 
+            if (Model.ImagePath != null)
+            {
+                <div class="form-group">
+                    @Html.Label("Image", "Image", new { @class = "control-label col-sm-4" })
+                    <div class="col-sm-4 crop">
+                        <img src="@Model.ImagePath"/>
+                    </div>
+                </div>
+            }
+
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "Index", "Article", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Cancel", "Details", "Article", new { @id = Model.Id }, new { @class = "btn btn-default" })
                     <input type="submit" value="Delete" class="btn btn-danger" />
                 </div>
             </div>

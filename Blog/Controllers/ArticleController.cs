@@ -133,6 +133,14 @@
                     return HttpNotFound();
                 }
 
+                var oldImagePath = article.ImagePath;
+                if (oldImagePath != null)
+                {
+                    var absoluteOldImagePath = Server.MapPath(oldImagePath);
+
+                    System.IO.File.Delete(absoluteOldImagePath);
+                }
+
                 db.Articles.Remove(article);
                 db.SaveChanges();
 
@@ -199,11 +207,14 @@
 
                             var uploadPath = imagesPath + filename;
 
+                            article.ImagePath = uploadPath;
+
                             image.SaveAs(Server.MapPath(uploadPath));
 
-                            // delete old image
+                            // deleting the old image
                             var oldImagePath = article.ImagePath;
-                            if (oldImagePath != null)
+
+                            if (oldImagePath == null)
                             {
                                 var absoluteOldImagePath = Server.MapPath(oldImagePath);
 
