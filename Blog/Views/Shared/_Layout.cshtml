@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @using Microsoft.AspNet.Identity
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -18,6 +19,20 @@
                 </button>
                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Articles", "List", "Article", new { area = "" }, new { @class = "navbar-brand" })
+
+                @if (Request.IsAuthenticated)
+                {
+                        @Html.AntiForgeryToken()
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                @Html.ActionLink("Create", "Create", "Article", new { area = "" }, new { @class = "navbar-brand" })
+                            </li>
+                            @*<li>
+                                @Html.ActionLink("My Articles", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                                <a href="~/Views/Article/List?user=@User.Identity.GetUserName()">My articles</a>
+                            </li>*@
+                        </ul>
+                }
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
