@@ -4,14 +4,14 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
-        @*using (Html.BeginForm("List", "Article", FormMethod.Get))
-        {
-            <div class="nav navbar-nav navbar-brand">
-                <input type="text" class="form-control" name="search" />
-            </div>
-        }*@
         <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Create", "Create", "Article", new { area = "" }, new { @class = "navbar-brand" })
+            </li>
+            <li>
+                @*@Html.ActionLink("My Articles", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <a href="~/Views/Article/List?user=@User.Identity.GetUserName()">My articles</a>
+            </li>
             <li>
                 @Html.ActionLink("Welcome, " + User.Identity.Name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>

@@ -12,11 +12,21 @@
 
     public class ArticleController : Controller
     {
-        public ActionResult List()
+        public ActionResult List(string user = null)
         {
             using (var db = new BlogDbContext())
             {
-                var articles = db.Articles.Include(a => a.Author).ToList();
+                var articles = db.Articles
+                    .Include(a => a.Author)
+                    .ToList();
+
+                var articleQuery = db.Articles.AsQueryable();
+
+                if (user != null)
+                {
+                    articleQuery = articleQuery
+                        .Where(a => a.Author.Email == user);
+                }
 
                 return View(articles);
             }

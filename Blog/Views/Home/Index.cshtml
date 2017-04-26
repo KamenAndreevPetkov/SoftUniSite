@@ -4,14 +4,19 @@
     ViewBag.Title = "Home";
 }
 
-<div class="row">
+<div class="row well">
+    <h1>
+        Our latest articles
+    </h1>
+</div>
+<div class="row well mt-20">
     @foreach (var article in Model)
-    {
+            {
         <div class="col-md-4">
             <h2>@article.Title</h2>
             <p>@article.Content</p>
             @if (article.ImagePath != null)
-            {
+                {
                 <div class="crop">
                     <img src="@article.ImagePath" class="img-responsive" />
                 </div>
