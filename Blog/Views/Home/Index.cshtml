@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Blog.Models.HomeIndexArticleModel>
+﻿@model IEnumerable<Blog.Models.ArticleDetailsModel>
 
 @{
     ViewBag.Title = "Home Page";
@@ -10,7 +10,12 @@
         <div class="col-md-4">
             <h2>@article.Title</h2>
             <p>@article.Content</p>
-            <img src="@article.ImagePath" class="img-responsive" />
+            @if (article.ImagePath != null)
+            {
+                <div class="crop">
+                    <img src="@article.ImagePath" class="img-responsive" />
+                </div>
+            }
             <div class="mt-20">
                 <p><a class="btn btn-default" href="/Article/Details/@article.Id">Read more</a></p>
             </div>

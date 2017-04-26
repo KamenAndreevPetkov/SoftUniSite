@@ -12,7 +12,12 @@
                 <div class="col-md-4">
                     <h2>@article.Title</h2>
                     <h3>@article.Content</h3>
-                    <img src="@article.ImagePath" class="img-responsive" />
+                    @if (article.ImagePath != null)
+                    {
+                        <div class="crop">
+                            <img src="@article.ImagePath" class="img-responsive" />
+                        </div>
+                    }
                     <br>
                     <footer class="pull-right">
                         <small class="author">
@@ -21,26 +26,8 @@
                     </footer>
                     <p><a class="btn btn-default" href="/Article/Details/@article.Id">Read more</a></p>
                 </div>
-                    @*                <article>
-                            <header>
-                                <h2>
-                                    @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
-                                </h2>
-                            </header>
-                            <p>
-                                @article.Content
-                                <br>
-                                <img src="@article.ImagePath" alt="Image" width="150" />
-                            </p>
-
-                            <footer class="pull-right">
-                                <small class="author">
-                                    @article.Author.FullName
-                                </small>
-                            </footer>
-                        </article>*@
-                    }
-                </div>
+            }
+        </div>
     </div>
 </div>
 <hr />

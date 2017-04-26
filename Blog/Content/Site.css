@@ -32,3 +32,13 @@ textarea {
 .mt-60 {
     margin-top: 60px;
 }
+
+.crop {
+    width: 400px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.crop img {
+    width: 300px;
+}

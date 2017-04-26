@@ -1,33 +1,6 @@
-﻿@*@using Microsoft.AspNet.Identity;
-    @{
-        ViewBag.Title = "Details";
-    }
-
-    <div class="container">
-        <div class="row mt-40">
-            <div class="col-md-4">
-                <h2>@Model.Title</h2>
-            </div>
-
-            <div class="col-md-4">
-                <p>@Model.Content</p>
-            </div>
-
-            <div class="col-md-4">
-                <img src="@Model.ImagePath" class="img-responsive" />
-            </div>
-
-            <div>
-
-            </div>
-        </div>
-    </div>*@
-
-@model Blog.Models.ArticleDetailsModel
-@using Microsoft.AspNet.Identity;
-@using System.Security.Claims;
+﻿@model Blog.Models.ArticleDetailsModel
 @{
-            ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 }
 
 <div class="container">
@@ -40,7 +13,7 @@
         <p>
             @Model.Content
         </p>
-            <img src="@Model.ImagePath" class="img-responsive" />
+        <img src="@Model.ImagePath" class="img-responsive" />
         <br>
 
         <small class="author">

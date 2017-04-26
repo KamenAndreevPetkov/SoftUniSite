@@ -16,7 +16,7 @@ namespace Blog.Controllers
             var articles = db.Articles
                 .OrderByDescending(a => a.Id)
                 .Take(3)
-                .Select(a => new HomeIndexArticleModel
+                .Select(a => new ArticleDetailsModel
                 {
                     Id = a.Id,
                     ImagePath = a.ImagePath,
