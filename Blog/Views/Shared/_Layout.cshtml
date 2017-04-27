@@ -27,10 +27,9 @@
                             <li>
                                 @Html.ActionLink("Create", "Create", "Article", new { area = "" }, new { @class = "navbar-brand" })
                             </li>
-                            @*<li>
-                                @Html.ActionLink("My Articles", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                                <a href="~/Views/Article/List?user=@User.Identity.GetUserName()">My articles</a>
-                            </li>*@
+                            <li>
+                                @Html.ActionLink("My Articles", "List", new { user = User.Identity.GetUserName() } , new { @class = "navbar-brand" })
+                            </li>
                         </ul>
                 }
             </div>

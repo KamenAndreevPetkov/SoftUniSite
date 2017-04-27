@@ -1,4 +1,5 @@
-﻿namespace Blog.Controllers
+﻿using System.Web.Mvc;
+namespace Blog.Controllers
 {
     using Blog.Models;
     using Microsoft.AspNet.Identity;
@@ -20,12 +21,10 @@
                     .Include(a => a.Author)
                     .ToList();
 
-                var articleQuery = db.Articles.AsQueryable();
-
                 if (user != null)
                 {
-                    articleQuery = articleQuery
-                        .Where(a => a.Author.Email == user);
+                   articles = articles
+                        .Where(a => a.Author.Email == user).ToList();
                 }
 
                 return View(articles);
@@ -86,6 +85,8 @@
 
             var article = db.Articles
                 .Where(a => a.Id == id)
+                .Include(a => a.Comments)
+                .Include(a => a.Author)
                 .Select(a => new ArticleDetailsModel
                 {
                     Id = a.Id,
@@ -93,10 +94,7 @@
                     Content = a.Content,
                     ImagePath = a.ImagePath,
                     Author = a.Author,
-                    CommentId = a.CommentId,
-                    Name = a.Name,
-                    Subject = a.Subject,
-                    Comment = a.Comment
+                    Comments = a.Comments
                 }).FirstOrDefault();
 
             if (article == null)
@@ -221,20 +219,18 @@
 
                             var uploadPath = imagesPath + filename;
 
-                            article.ImagePath = uploadPath;
-
                             image.SaveAs(Server.MapPath(uploadPath));
 
                             // deleting the old image
                             var oldImagePath = article.ImagePath;
 
-                            if (oldImagePath == null)
+                            article.ImagePath = uploadPath;
+
+                            if (oldImagePath != null)
                             {
                                 var absoluteOldImagePath = Server.MapPath(oldImagePath);
 
                                 System.IO.File.Delete(absoluteOldImagePath);
-
-                                article.ImagePath = uploadPath;
                             }
                         }
                     }
@@ -258,6 +254,36 @@
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult PostComment(int? id, CommentViewModel commentViewModel)
+        {
+            var db = new BlogDbContext();
+            if (id == null)
+            {
+                return HttpNotFound("No article found");
+            }
+
+            var article = db.Articles.Include(a => a.Comments).FirstOrDefault(a => a.Id == id);
+
+            var commentAuthorId = User.Identity.GetUserId();
+
+            var comment = new Comment()
+            {
+                Subject = commentViewModel.Subject,
+                Content = commentViewModel.Content,
+                Date = DateTime.Now,
+                AuthorId = commentAuthorId,
+                ArticleId = article.Id
+            };
+
+            article.Comments.Add(comment);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { Id = article.Id });
         }
 
         private string ConvertFilenameToRandomizedFilename(string filename)

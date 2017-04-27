@@ -183,7 +183,8 @@
     <Compile Include="Models\ArticleDetailsModel.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\BlogDbContext.cs" />
-    <Compile Include="Models\Comments.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\HomeIndexArticleModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +265,7 @@
     <Content Include="Views\Article\Details.cshtml" />
     <Content Include="Views\Article\Delete.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Shared\_CommentsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

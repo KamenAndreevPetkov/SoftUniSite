@@ -15,6 +15,8 @@ namespace Blog.Models
         [Required]
         public string FullName { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

@@ -1,5 +1,6 @@
 ﻿namespace Blog.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class ArticleDetailsModel
@@ -18,23 +19,9 @@
 
         public string AuthorId { get; set; }
 
-        public string FullName { get; set; }
-
-        [Key]
-        public int CommentId { get; set; }
-
-        [Required]
-        [StringLength(10)]
-        public string Name { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Subject { get; set; }
-
-        [Required]
-        public string Comment { get; set; }
-
         public virtual ApplicationUser Author { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
 
         public bool IsAuthor(string authorId)
         {

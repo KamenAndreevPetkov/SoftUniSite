@@ -1,0 +1,27 @@
+﻿@model Blog.Models.CommentViewModel
+
+@using (Html.BeginForm("PostComment", "Article", new { Id = Model.ArticleId }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @*Writing a comment*@
+    <div class="form-group mt-20">
+        @Html.LabelFor(m => m.Subject, new { @class = "control-label col-sm-1" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @rows = "1" })
+        </div>
+    </div>
+
+    <div class="form-group mt-20">
+        @Html.LabelFor(m => m.Content, new { @class = "control-label col-sm-1" })
+        <div class="col-sm-4">
+            @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "7" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-4">
+            <input type="submit" value="Post Comment" class="btn btn-success" />
+        </div>
+    </div>
+}
+<br>

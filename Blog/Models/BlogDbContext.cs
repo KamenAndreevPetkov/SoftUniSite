@@ -13,7 +13,9 @@ namespace Blog.Models
         {
         }
 
-        public DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+
+        public virtual DbSet<Comment> Comments { get; set; }
 
         public static BlogDbContext Create()
         {
