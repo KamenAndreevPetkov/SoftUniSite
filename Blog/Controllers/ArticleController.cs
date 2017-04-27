@@ -93,6 +93,10 @@
                     Content = a.Content,
                     ImagePath = a.ImagePath,
                     Author = a.Author,
+                    CommentId = a.CommentId,
+                    Name = a.Name,
+                    Subject = a.Subject,
+                    Comment = a.Comment
                 }).FirstOrDefault();
 
             if (article == null)

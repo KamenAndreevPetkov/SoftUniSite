@@ -183,6 +183,7 @@
     <Compile Include="Models\ArticleDetailsModel.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\BlogDbContext.cs" />
+    <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\HomeIndexArticleModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

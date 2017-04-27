@@ -20,6 +20,14 @@
 
         public virtual ApplicationUser Author { get; set; }
 
+        public int CommentId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Subject { get; set; }
+
+        public string Comment { get; set; }
+
         public bool IsAuthor(string authorId)
         {
             return AuthorId == authorId;
