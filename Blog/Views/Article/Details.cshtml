@@ -4,47 +4,49 @@
 }
 
 <div class="container">
-    <article>
-        <header>
-            <h2>
-                @Model.Title
-            </h2>
-            <div class="badge pull-right">
-                Contact me at:<br> <br>@Model.Author.Email
+    <div class="well">
+        <article>
+            <header>
+                <h2>
+                    @Model.Title
+                </h2>
+                <div class="badge pull-right">
+                    Contact me at:<br> <br>@Model.Author.Email
+                </div>
+            </header>
+            <p>
+                @Model.Content
+            </p>
+            <img src="@Model.ImagePath" class="img-responsive mt-40" />
+            <br>
+
+            <div class="badge">
+                <small class="author">
+                    Article by: @Model.Author.FullName
+                </small>
             </div>
-        </header>
-        <p>
-            @Model.Content
-        </p>
-        <img src="@Model.ImagePath" class="img-responsive mt-40" />
-        <br>
 
-        <div class="badge">
-            <small class="author">
-                Article by: @Model.Author.FullName
-            </small>
-        </div>
-
-        <footer class="pull-right mt-40">
-            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || HttpContext.Current.User.Identity.Name.Equals(Model.Author.UserName)))
+            <footer class="pull-right mt-40">
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || HttpContext.Current.User.Identity.Name.Equals(Model.Author.UserName)))
             {
-                @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-            }
-            @Html.ActionLink("Back", "List", "Article", null, new { @class = "btn btn-default btn-xs" })
-        </footer>
+                    @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+                    @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                }
+                @Html.ActionLink("Back", "List", "Article", null, new { @class = "btn btn-default btn-xs" })
+            </footer>
+            <h2>Post a comment below</h2>
+            @Html.Partial("_CommentsPartial", new Blog.Models.CommentViewModel(Model.Id))
+        </article>
 
-        @Html.Partial("_CommentsPartial", new Blog.Models.CommentViewModel(Model.Id))
-    </article>
-
-    <h2>Comments</h2>
-    <hr />
-    @foreach (var comment in Model.Comments)
-    {
-        <div class="row">
-            <p>By @comment.Author.FullName, posted on <span class="badge">@comment.Date</span></p>
-            <input type="text" class="form-control" readonly value="@comment.Content">
-        </div>
-    }
+        <h2>Comments</h2>
+        <hr />
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="row">
+                <p>By @comment.Author.FullName, posted on <span class="badge">@comment.Date</span></p>
+                <input type="text" class="form-control" readonly value="@comment.Content">
+            </div>
+        }
+    </div>
 </div>
 <hr />
